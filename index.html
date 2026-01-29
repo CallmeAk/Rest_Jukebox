@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Restaurant Jukebox System</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="brand"><span>🎵</span> BeatBites System</div>
+
+        <div class="header-controls">
+
+            <!-- Super Admin Link -->
+
+            <a href="#" class="admin-link" onclick="app.navigateTo('admin-login'); return false;">
+
+                <span>👑 Super Admin</span>
+
+            </a>
+
+            <button class="btn btn-outline" id="homeBtn">Home</button>
+
+        </div>
+
+    </header>
+
+    <main>
+
+        <!-- VIEW: Landing -->
+
+        <section id="view-landing" class="view-section active">
+
+            <div style="text-align: center; margin-bottom: 2rem;">
+
+                <h1>Welcome</h1>
+
+                <p style="color: var(--text-muted);">Please select your role below</p>
+
+            </div>
+
+            <div class="landing-grid">
+
+                <div class="card role-card" onclick="app.navigateTo('table-select')">
+
+                    <span class="role-icon">🍽️</span>
+
+                    <h3>Customer</h3>
+
+                    <p style="color: var(--text-muted);">Select your table to request songs.</p>
+
+                </div>
+
+                <div class="card role-card" onclick="app.navigateTo('dj-login')">
+
+                    <span class="role-icon">🎧</span>
+
+                    <h3>DJ</h3>
+
+                    <p style="color: var(--text-muted);">Manage the playlist.</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- VIEW: Table Selection (1-15 Grid) -->
+
+        <section id="view-table-select" class="view-section">
+
+            <div class="card" style="text-align: center;">
+
+                <h2>Select Your Table</h2>
+
+                <p style="color: var(--text-muted);">Tap on your table number</p>
+
+                <div id="tableGridContainer" class="table-grid">
+
+                    <!-- JS will generate buttons 1-15 here -->
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- VIEW: Customer App -->
+
+        <section id="view-table-app" class="view-section">
+
+            <div class="table-header" style="text-align: center; margin-bottom: 2rem;">
+
+                <h2 id="tableTitle">Table #1</h2>
+
+                <p style="color: var(--text-muted);">Search and suggest a song (Works with Bollywood too!)</p>
+
+            </div>
+
+            <div class="search-container">
+
+                <input type="text" id="songSearch" class="search-input" placeholder="Type song name (e.g. 'Chaiyya Chaiyya')..." autocomplete="off">
+
+                <div id="suggestionsList" class="suggestions"></div>
+
+            </div>
+
+            <div id="cooldownMsg" class="timer-display">
+
+                <h4>⏳ Slow down!</h4>
+
+                <p>Next suggestion in <span id="timeLeft">5:00</span> min.</p>
+
+            </div>
+
+        </section>
+
+        <!-- VIEW: DJ Login -->
+
+        <section id="view-dj-login" class="view-section">
+
+            <div class="card" style="max-width: 400px; margin: 0 auto; text-align: center;">
+
+                <h2>DJ Login</h2>
+
+                <input type="password" id="djPass" class="search-input" placeholder="Enter PIN" style="margin-bottom: 1rem;">
+
+                <button class="btn" onclick="app.djLogin()">Login</button>
+
+            </div>
+
+        </section>
+
+        <!-- VIEW: DJ Dashboard (Strict) -->
+
+        <section id="view-dj-dashboard" class="view-section">
+
+            <div class="now-playing">
+
+                <h3 style="margin-bottom: 0.5rem;">Now Playing</h3>
+
+                <p id="currentSongName" style="font-weight: bold; font-size: 1.2rem; margin-bottom: 0.25rem;">-</p>
+
+                <p id="currentSongArtist" style="color: var(--accent-color); margin-bottom: 2rem;">-</p>
+
+                <button class="btn" style="width: 200px; background-color: var(--accent-color); color: #000;" onclick="app.playNext()">▶ Play Next</button>
+
+            </div>
+
+            <div class="card">
+
+                <h2>Up Next Queue</h2>
+
+                <ul id="djQueueList" class="dj-queue-list"></ul>
+
+                <div id="djEmptyState" style="text-align: center; padding: 2rem; color: var(--text-muted);">Queue is empty.</div>
+
+            </div>
+
+        </section>
+
+        <!-- VIEW: Admin Login -->
+
+        <section id="view-admin-login" class="view-section">
+
+            <div class="card" style="max-width: 400px; margin: 0 auto; text-align: center;">
+
+                <h2 style="color: var(--admin-color); border-color: var(--admin-color);">Super Admin Login</h2>
+
+                <input type="password" id="adminPass" class="search-input" placeholder="Master PIN (Default: 9999)" style="margin-bottom: 1rem;">
+
+                <button class="btn btn-admin" onclick="app.adminLogin()">Access Control</button>
+
+            </div>
+
+        </section>
+
+        <!-- VIEW: Admin Dashboard -->
+
+        <section id="view-admin-dashboard" class="view-section">
+
+            <div class="admin-grid">
+
+                <div>
+
+                    <div class="card">
+
+                        <h2 style="color: var(--admin-color); border-color: var(--admin-color);">Active Queue Management</h2>
+
+                        <p style="margin-bottom: 1rem; color: var(--text-muted);">Admins can remove bad requests.</p>
+
+                        <ul id="adminQueueList" class="dj-queue-list"></ul>
+
+                        <button class="btn btn-danger" style="width: 100%; margin-top: 1rem;" onclick="app.clearQueue()">⚠ Clear Entire Queue</button>
+
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <!-- Generate QR -->
+
+                    <div class="card">
+
+                        <h3>Generate QR Code</h3>
+
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">Scan to access Table Login</p>
+
+                        <div class="qr-placeholder">
+
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://example.com/table-login" alt="QR Code">
+
+                        </div>
+
+                        <p style="font-size: 0.8rem; text-align: center; color: var(--text-muted);">Points to Table Selection</p>
+
+                    </div>
+
+                    <!-- Change Password -->
+
+                    <div class="card">
+
+                        <h3>Change DJ PIN</h3>
+
+                        <input type="password" id="newDjPin" class="search-input" placeholder="New PIN (4 digits)" style="margin-bottom: 1rem;">
+
+                        <button class="btn btn-admin" style="width: 100%;" onclick="app.changePassword()">Update PIN</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <div id="toast" class="toast">Action Successful</div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
