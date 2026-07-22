@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BeatBites - secure guest engagement and restaurant jukebox platform." />
+  <title>BeatBites Guest Music Platform</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <button class="brand" data-view="landing" aria-label="Go home"><span>🎵</span> BeatBites</button>
+    <nav class="header-controls">
+      <button class="link-button" id="adminLink">👑 Admin</button>
+      <button class="btn btn-outline" data-view="landing">Home</button>
+    </nav>
+  </header>
+
+  <main class="app-shell">
+    <section id="view-landing" class="view active">
+      <div class="hero">
+        <span class="eyebrow">Guest Engagement + Music Requests</span>
+        <h1>Turn every table into a customer engagement point.</h1>
+        <p>Guests scan secure QR codes, register, request/vote songs, and restaurants collect useful guest insights.</p>
+      </div>
+      <div class="grid two">
+        <button class="card role-card" data-view="scan-entry"><span>📱</span><strong>Guest Access</strong><small>Scan QR or enter table code</small></button>
+        <button class="card role-card" data-view="dj-login"><span>🎧</span><strong>DJ Console</strong><small>Control requests and voting queue</small></button>
+      </div>
+    </section>
+
+    <section id="view-scan-entry" class="view">
+      <form id="tokenForm" class="card login-card">
+        <h2>Secure Table Access</h2>
+        <p class="muted">In production, this code comes from the table QR token. Do not expose table numbers directly in URLs.</p>
+        <input id="tableTokenInput" class="input" placeholder="Enter table token, e.g. demo-table-1" required />
+        <button class="btn" type="submit">Continue</button>
+        <p class="hint">Demo tokens: <code>demo-table-1</code> to <code>demo-table-15</code></p>
+      </form>
+    </section>
+
+    <section id="view-guest-registration" class="view">
+      <form id="guestForm" class="card login-card">
+        <h2>Guest Registration</h2>
+        <p class="muted">Restaurants can use this data for loyalty, birthday offers, repeat visits, and music preference analytics.</p>
+        <input id="guestName" class="input" placeholder="Full name *" required />
+        <input id="guestMobile" class="input" placeholder="Mobile number *" inputmode="tel" required />
+        <input id="guestEmail" class="input" placeholder="Email address optional" type="email" />
+        <input id="guestDob" class="input" placeholder="Date of birth optional" type="date" />
+        <select id="guestGenre" class="input">
+          <option value="">Favorite music genre optional</option>
+          <option>Bollywood</option><option>Punjabi</option><option>Pop</option><option>EDM</option><option>Rock</option><option>Retro</option><option>Hip-Hop</option>
+        </select>
+        <label class="check"><input id="guestConsent" type="checkbox" required /> I agree to share my details with this restaurant for service and promotional offers.</label>
+        <button class="btn" type="submit">Enter Jukebox</button>
+      </form>
+    </section>
+
+    <section id="view-customer" class="view">
+      <div class="customer-head">
+        <span class="pill" id="activeTablePill">Table</span>
+        <h2 id="guestWelcome">Welcome</h2>
+        <p class="muted">Request a song, vote for existing songs, and track your position.</p>
+      </div>
+      <div class="card search-card">
+        <input type="search" id="songSearch" class="input search" placeholder="Search song or artist..." autocomplete="off" />
+        <div id="suggestions" class="suggestions"></div>
+      </div>
+      <div id="cooldownBox" class="notice danger hidden">⏳ Next request available in <b id="cooldownTime">5:00</b></div>
+      <div id="myRequestBox" class="notice hidden"></div>
+      <div class="card">
+        <div class="section-row"><h2>Live Queue</h2><button class="btn btn-outline small" id="refreshCustomerQueue">Refresh</button></div>
+        <ul id="customerQueue" class="queue"></ul>
+        <div id="customerEmpty" class="empty">No songs in queue yet.</div>
+      </div>
+    </section>
+
+    <section id="view-dj-login" class="view">
+      <form id="djLoginForm" class="card login-card">
+        <h2>DJ Login</h2>
+        <input id="djPin" class="input" type="password" inputmode="numeric" placeholder="DJ PIN" required />
+        <button class="btn" type="submit">Login</button>
+      </form>
+    </section>
+
+    <section id="view-dj" class="view">
+      <div class="grid dash">
+        <div class="now-card">
+          <span class="eyebrow">Now Playing</span>
+          <h2 id="nowTitle">Nothing playing</h2>
+          <p id="nowArtist" class="muted">Queue ready</p>
+          <div class="actions"><button class="btn btn-success" id="playNext">▶ Play Next</button><button class="btn btn-outline" id="clearNow">Clear</button></div>
+        </div>
+        <div class="card stats">
+          <h3>Today Snapshot</h3>
+          <div class="stat-grid"><div><b id="statGuests">0</b><span>Guests</span></div><div><b id="statQueued">0</b><span>Queued</span></div><div><b id="statVotes">0</b><span>Votes</span></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="section-row"><h2>DJ Queue</h2><input id="djFilter" class="input mini" placeholder="Filter..." /></div>
+        <ul id="djQueue" class="queue"></ul><div id="djEmpty" class="empty">Queue is empty.</div>
+      </div>
+    </section>
+
+    <section id="view-admin-login" class="view">
+      <form id="adminLoginForm" class="card login-card admin-card">
+        <h2>Admin Login</h2>
+        <input id="adminPin" class="input" type="password" inputmode="numeric" placeholder="Admin PIN" required />
+        <button class="btn btn-admin" type="submit">Open Admin</button>
+      </form>
+    </section>
+
+    <section id="view-admin" class="view">
+      <div class="admin-grid">
+        <div class="card admin-card">
+          <div class="section-row"><h2>Guest Intelligence</h2><button class="btn btn-danger small" id="clearQueue">Clear Queue</button></div>
+          <div class="stat-grid big"><div><b id="adminGuests">0</b><span>Total Guests</span></div><div><b id="adminReturning">0</b><span>Returning</span></div><div><b id="adminRequests">0</b><span>Requests</span></div></div>
+          <h3>Guest List</h3><ul id="guestList" class="mini-list"></ul>
+        </div>
+        <div class="card">
+          <h2>Secure Table QR Codes</h2>
+          <p class="muted">QR links use non-guessable table tokens, not raw table numbers.</p>
+          <div id="qrGrid" class="qr-grid"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
