@@ -1,0 +1,9 @@
+{
+  "name": "BeatBites V5",
+  "short_name": "BeatBites",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#09111f",
+  "theme_color": "#8b5cf6",
+  "description": "Restaurant guest engagement and jukebox platform"
+}
