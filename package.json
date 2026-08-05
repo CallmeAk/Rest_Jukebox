@@ -1,0 +1,12 @@
+{
+  "name": "beatbites",
+  "version": "6.0.0",
+  "description": "Restaurant guest engagement, loyalty, analytics and live music platform.",
+  "private": true,
+  "scripts": {
+    "test": "node tests/core.test.js",
+    "serve": "python3 -m http.server 8080",
+    "check": "node --check js/store.js && node --check js/core.js && node --check js/app.js"
+  },
+  "license": "MIT"
+}

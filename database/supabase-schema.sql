@@ -1,0 +1,4 @@
+-- DEPRECATED. This file is kept only so old links don't 404.
+-- The current, authoritative schema is database/schema.sql
+-- (multi-tenant, two-currency ledger, redemptions, dedications, RLS).
+-- Run that one in the Supabase SQL editor.

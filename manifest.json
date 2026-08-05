@@ -1,0 +1,16 @@
+{
+  "name": "BeatBites — Restaurant Jukebox & CRM",
+  "short_name": "BeatBites",
+  "description": "Restaurant guest engagement, loyalty, analytics and live music platform.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#09111f",
+  "theme_color": "#8b5cf6",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon.svg", "type": "image/svg+xml", "sizes": "any" }
+  ]
+}
