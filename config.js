@@ -8,8 +8,8 @@
  */
 window.BEATBITES_CONFIG = {
   // --- Backend (blank = offline demo) ---
-  SUPABASE_URL: "",
-  SUPABASE_ANON_KEY: "",
+  SUPABASE_URL: "https://yxhstpxrkqazftpngijk.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_dy6vJfk6bfVgsq-Weatj1Q_4VGfPQPi",
 
   // --- Multi-tenant registry --------------------------------------------
   // The active tenant is chosen by ?r=<id> in the URL, else DEFAULT_RESTAURANT.
@@ -38,7 +38,7 @@ window.BEATBITES_CONFIG = {
   SEARCH_LIMIT: 8,
   MAX_QUEUE_SIZE: 70,          // global safety ceiling
   PER_GUEST_QUEUE_CAP: 2,      // fairness: songs one guest may have waiting
-  LIVE_BY_DEFAULT: false,      // venue starts OFF; staff press "Go live"
+  LIVE_BY_DEFAULT: true,      // venue starts OFF; staff press "Go live"
   FILTER_EXPLICIT: true,
 
   // --- Auto-DJ ----------------------------------------------------------
