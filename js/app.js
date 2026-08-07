@@ -513,6 +513,7 @@
       this.auth[kind] = true;
       this.nav(kind);
       this.setupAutoDJ();
+       this.buildQRs();
       this.toast(`${kind === "dj" ? "DJ" : "Admin"} access granted`);
     },
     djLogin() {
